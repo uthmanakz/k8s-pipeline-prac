@@ -36,7 +36,8 @@ pipeline {
                     withCredentials([file(credentialsId : 'KUBECONFIG-FILE' , variable : 'KUBECONFIG')]) {
                         sshagent(credentials : ['SSH_PRIVATE_KEY'] ) {
                             sh '''
-                            KUBECTL=$(terraform output | grep KUBECTL | awk -F '"' '{print $2}') "
+                            KUBECTL=$(terraform output | grep KUBECTL | awk -F '"' '{print $2}') 
+                            ssh -o StrictHostKeyChecking=no ec2-user@$KUBECTL "
                             mkdir ~/.kube"
                             '''
                         }
