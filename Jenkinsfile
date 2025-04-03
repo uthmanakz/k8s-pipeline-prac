@@ -29,5 +29,20 @@ pipeline {
                 '''
             }
         }
+
+        stage ('SSH into kubectl remote') {
+            steps {
+                script { 
+                    withCredentials([file(credentialsId : 'KUBECONFIG-FILE' , variable : 'KUBECONFIG')]) {
+                        sshagent(credentials : ['SSH_PRIVATE_KEY'] ) {
+                            sh '''
+                            KUBECTL=$(terraform output | grep KUBECTL | awk -F '"' '{print $2}') "
+                            mkdir ~/.kube"
+                            '''
+                        }
+                    }
+                }
+            }
+        }
     }
 }

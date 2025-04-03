@@ -11,3 +11,7 @@ resource "aws_instance" "kubectl_node" {
         Name = "kubectl-node"
     }
 }
+
+output "KUBECTL" {
+    value = aws_instance.kubectl_node.public_ip
+}
