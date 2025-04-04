@@ -37,9 +37,9 @@ pipeline {
                         sshagent(credentials : ['SSH_PRIVATE_KEY'] ) {
                             sh '''
                             KUBECTL=$(terraform output | grep KUBECTL | awk -F '"' '{print $2}') 
-                            ssh -o StrictHostKeyChecking=no ec2-user@$KUBECTL "
-                            mkdir -p ~/.kube"
-                            scp -o StrictHostKeyChecking=no $KUBECONFIG ec2-user@$KUBECTL:~/.kube/config
+                            scp -o StrictHostKeyChecking=no $KUBECONFIG ec2-user@$KUBECTL:~/kubeconfig
+                            ssh -o StrictHostKeyChecking=no ec2-user@$KUBECTL'
+                            export KUBECONFIG=kubeconfig'
                             '''
                         }
                     }
