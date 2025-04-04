@@ -52,7 +52,7 @@ pipeline {
                     sshagent(credentials : ['SSH_PRIVATE_KEY']) {
                         sh'''
                         KUBECTL=$(terraform output | grep KUBECTL | awk -F '"' '{print $2}')
-                        ssh -o StrictHostKeyChecking=no ec2-user@$KUBECTL'
+                        ssh -o StrictHostKeyChecking=no ec2-user@$KUBECTL '
                         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" &&
                         chmod +x kubectl &&
                         mkdir -p ~/.local/bin &&
