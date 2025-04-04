@@ -38,7 +38,8 @@ pipeline {
                             sh '''
                             KUBECTL=$(terraform output | grep KUBECTL | awk -F '"' '{print $2}') 
                             ssh -o StrictHostKeyChecking=no ec2-user@$KUBECTL "
-                            mkdir ~/.kube && echo "$KUBECONFIG" > ~/.kube/config"
+                            mkdir ~/.kube && chmod 600 ~/.kube"
+                            scp -o StrictHostKeyChecking=no $KUBECONFIG ec2-user@$KUBECTL:~/.kube/config
                             '''
                         }
                     }
