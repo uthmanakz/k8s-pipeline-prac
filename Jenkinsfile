@@ -38,7 +38,7 @@ pipeline {
                             sh '''
                             KUBECTL=$(terraform output | grep KUBECTL | awk -F '"' '{print $2}') 
                             scp -o StrictHostKeyChecking=no $KUBECONFIG ec2-user@$KUBECTL:~/kubeconfig
-                            ssh -o StrictHostKeyChecking=no ec2-user@$KUBECTL'
+                            ssh -o StrictHostKeyChecking=no ec2-user@$KUBECTL '
                             export KUBECONFIG=kubeconfig'
                             '''
                         }
